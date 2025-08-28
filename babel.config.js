@@ -10,6 +10,7 @@ module.exports = {
                     // or specify specific browser versions
                     // chrome: '58',
                     // ie: '11',
+                    node: 'current',
                 },
                 // Enables automatic polyfilling based on usage and targets
                 // 'usage' adds polyfills only when used, 'entry' requires manual imports in entry file
