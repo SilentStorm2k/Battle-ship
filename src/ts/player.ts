@@ -21,4 +21,8 @@ export class Player {
     get gameBoard() {
         return this._gameBoard;
     }
+
+    reset() {
+        this._gameBoard = new GameBoard(10, 10);
+    }
 }

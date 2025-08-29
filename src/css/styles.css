@@ -1,3 +1,30 @@
 body {
     background-color: rebeccapurple;
 }
+
+.gameBoard {
+    display: grid;
+
+    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 1fr);
+}
+
+.highlight {
+    background-color: aquamarine;
+}
+
+.invalid {
+    background-color: red;
+}
+
+.ship {
+    background-color: blueviolet;
+}
+
+.hit {
+    background-color: firebrick;
+}
+
+.missed {
+    background-color: aqua;
+}

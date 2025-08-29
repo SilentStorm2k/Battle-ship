@@ -1,3 +1,4 @@
 import '../css/styles.css';
+import { DOMAgent } from './DOMAgent';
 
-console.log('hello world');
+DOMAgent.renderLandingPage();
