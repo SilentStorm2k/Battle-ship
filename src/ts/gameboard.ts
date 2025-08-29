@@ -37,22 +37,27 @@ export class GameBoard {
             this._shipCoordinates.get(coord.toString())?.hit();
             this._shipCoordinates.delete(coord.toString());
             if (this._shipCoordinates.size === 0) this._isGameOver = true;
-        } else this._missedShots.add(coord.toString());
+            return true;
+        } else {
+            this._missedShots.add(coord.toString());
+            return false;
+        }
     }
 
     /**
-     * Adds ship if within bounds to the gameBoard
-     * @param orientation - True indicates horizontal, false indicates vertical
+     * Adds ship if within bounds and not overlapping with other ships to the gameBoard
+     * @param orientation - True indicates vertical, false indicates horizontal
      * @param coord - X,Y coordinate of ship's center
      * @param ship - The ship to be placed
-     * @returns nothing
+     * @returns true if ship placed successfully, else false
      */
     placeShip(coord: Coordinate, orientation: boolean, ship: Ship) {
         const x = coord.x;
         const y = coord.y;
         const shipLength = ship.len - 1;
+        const shipCoordinates: string[] = [];
         if (orientation) {
-            // ship places horizontally
+            // ship places vertically
             // first check if ship can fit
             if (
                 0 <= x &&
@@ -68,10 +73,9 @@ export class GameBoard {
                     i <= x + Math.ceil(shipLength / 2);
                     i++
                 )
-                    this._shipCoordinates.set(
-                        new Coordinate(i, y).toString(),
-                        ship,
-                    );
+                    shipCoordinates.push(new Coordinate(i, y).toString());
+            } else {
+                return false;
             }
         } else {
             if (
@@ -88,11 +92,20 @@ export class GameBoard {
                     j <= y + Math.ceil(shipLength / 2);
                     j++
                 )
-                    this._shipCoordinates.set(
-                        new Coordinate(x, j).toString(),
-                        ship,
-                    );
+                    shipCoordinates.push(new Coordinate(x, j).toString());
+            } else {
+                return false;
             }
+        }
+        const isShipNotOverlapping = shipCoordinates.every(
+            (ship) => !this.shipCoordinates.has(ship),
+        );
+        if (isShipNotOverlapping) {
+            for (const shipCoord of shipCoordinates)
+                this.shipCoordinates.set(shipCoord, ship);
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -24,6 +24,18 @@ describe('GameBoard tests', () => {
         expect(gameBoard.shipCoordinates).toEqual(shipCoordinates);
     });
 
+    test('Placing ships out of bounds', () => {
+        expect(
+            gameBoard.placeShip(new Coordinate(-1, -1), true, smallShip),
+        ).toBe(false);
+        expect(gameBoard.placeShip(new Coordinate(5, 5), true, smallShip)).toBe(
+            false,
+        );
+        expect(gameBoard.placeShip(new Coordinate(2, 2), true, smallShip)).toBe(
+            true,
+        );
+    });
+
     test('Receive attack', () => {
         const shipCoordinates = new Map<string, Ship>();
         shipCoordinates.set(new Coordinate(1, 1).toString(), smallShip);
@@ -59,5 +71,22 @@ describe('GameBoard tests', () => {
         gameBoard.receiveAttack(new Coordinate(2, 3));
         missedShots.add(new Coordinate(2, 3).toString());
         expect(gameBoard.missedShots).toEqual(missedShots);
+    });
+
+    test('Placing new ship on existing ship location does not place ship', () => {
+        expect(
+            gameBoard.placeShip(new Coordinate(2, 2), false, smallShip),
+        ).toBe(true);
+        expect(
+            gameBoard.placeShip(new Coordinate(2, 2), false, smallShip),
+        ).toBe(false);
+    });
+
+    test('Receive attack returns true if hit registered, false otherwise', () => {
+        gameBoard.placeShip(new Coordinate(3, 2), false, smallShip);
+        expect(gameBoard.receiveAttack(new Coordinate(3, 2))).toBe(true);
+        expect(gameBoard.receiveAttack(new Coordinate(3, 1))).toBe(false);
+        expect(gameBoard.receiveAttack(new Coordinate(3, 4))).toBe(false);
+        expect(gameBoard.receiveAttack(new Coordinate(3, 3))).toBe(true);
     });
 });
