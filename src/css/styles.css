@@ -186,16 +186,15 @@ h1 {
         background-color: #85144b;
     }
 }
-
+.ship {
+    background-color: #0074d9 !important; /* naval blue */
+}
 .highlight {
     background-color: #2ecc40 !important;
     animation: radarPulse 1.5s infinite;
 }
 .invalid {
     background-color: #ff4136 !important; /* danger red */
-}
-.ship {
-    background-color: #0074d9 !important; /* naval blue */
 }
 .hit {
     background-color: #85144b !important;
